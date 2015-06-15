@@ -27,3 +27,4 @@ The following example shows how to take a standard VM and migrate it to a DS Ser
 * Currently I am only copying disks, end points, VM extensions. I am not copying ACL's and other type of extensions like malware extension
 * I only tested the script with PowerShell SDK Version 0.9.2
 * I tested migrating standard VM in West US to DS Series VM in West US only. I logged into the newly created VM and verified that all disks were present. This is the extent of my testing. My VM with 3 Disk's copied in 10 minutes. 
+* If your destination storage account already exists it has to be of type “Premium_LRS”. If you have an existing account of different type the script will fail. If the storage account does not exist it will be created.
