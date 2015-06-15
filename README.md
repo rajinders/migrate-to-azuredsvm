@@ -25,3 +25,4 @@ The following example shows how to take a standard VM and migrate it to a DS Ser
 * It gives new names to the disks in the destination virtual machine
 * If your VM has a disk smaller than 10 GB the script will fail because we are not allowed to add disks smaller than 10 GB
 * Currently I am only copying disks, end points, VM extensions. I am not copying ACL's and other type of extensions like malware extension
+* I only tested the script with PowerShell SDK Version 0.9.2
