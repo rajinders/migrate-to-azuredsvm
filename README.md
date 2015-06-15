@@ -1,5 +1,6 @@
 # migrate-to-azuredsvm
-PowerShell script that can be used to migrate standard Azure VM to DS Series VM with SSD Premium storage
+PowerShell script that can be used to migrate standard Azure VM to DS Series VM with SSD Premium storage.
+You can read my accompaning blog [post](http://www.rajinders.com/2015/06/14/how-to-migrate-from-standard-azure-virtual-machines-to-ds-series-storage-optimized-vms/) to learn more.
 
 ## Examples
 The following example shows how to take a standalone standard VM and migrate it to DS Series standalone VM with durable SSD drives.
