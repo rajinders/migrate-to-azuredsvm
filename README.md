@@ -21,6 +21,7 @@ The following example shows how to take a standard VM and migrate it to a DS Ser
 **Notes**
 * Currently this script only migrates virtual machines to the same subscription.
 * It can migrate VM's to a different region as long as premium storage is available in that region
+* It works on both Linux and Windows Virtual machines.
 * It shuts down the existing source VM before making of copy of the VHD's for the virtual machine.
 * It validates that virtual network for the destination VM exists but does not validate if subnet also exists
 * It gives new names to the disks in the destination virtual machine
