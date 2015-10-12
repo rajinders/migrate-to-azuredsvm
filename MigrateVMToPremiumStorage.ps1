@@ -107,6 +107,15 @@ $StorageAccountTypePremium = 'Premium_LRS'
 #Perform as much upfront validation as possible
 #############################################################################################################
 
+#validate that current subscription is set
+$CurrentSubscription = Get-AzureSubscription -ErrorAction SilentlyContinue
+
+if (!$CurrentSubscription) 
+{
+	Write-Error "Cannot find current subscription"
+	return
+}
+
 #validate upfront that this service we are trying to create already exists
 if((Get-AzureService -ServiceName $DestServiceName -ErrorAction SilentlyContinue) -ne $null)
 {
@@ -132,7 +141,6 @@ else
 }
 
 Write-Host "DepoyToVNet is set to [$DeployToVnet]"
-
 
 #TODO: add validation to make sure the destination VM size can accomodate the number of disk in the source VM
 
@@ -166,6 +174,8 @@ else
     }
 }
 
+Write-Host "Setting current Azure Subscription to [$($CurrentSubscription.SubscriptionId)] with Storage Account [$($DestStorageAccountName)]"
+Set-AzureSubscription -SubscriptionId $CurrentSubscription.SubscriptionId -CurrentStorageAccountName $DestStorageAccountName
 
 Write-Host "Source VM Name is [$SourceVMName] and Service Name is [$SourceServiceName]"
 
@@ -453,4 +463,11 @@ else
 $SourceVM | get-azurevmextension | foreach {
     Write-Host "ExtensionName [$($_.ExtensionName)] Publisher [$($_.Publisher)] Version [$($_.Version)] ReferenceName [$($_.ReferenceName)] State [$($_.State)] RoleName [$($_.RoleName)]"
     get-azurevm -ServiceName $DestServiceName -Name $DestVMName -Verbose | set-azurevmextension -ExtensionName $_.ExtensionName -Publisher $_.Publisher -Version $_.Version -ReferenceName $_.ReferenceName -Verbose | Update-azurevm -Verbose
+}
+
+#change storage account back to original value
+if ($CurrentSubscription.CurrentStorageAccountName -and ($CurrentSubscription.CurrentStorageAccountName -ne $DestStorageAccountName)) 
+{
+	Write-Host "Setting current Azure Subscription to [$($CurrentSubscription.SubscriptionId)] with Storage Account [$($CurrentSubscription.CurrentStorageAccountName)]"
+	Set-AzureSubscription -SubscriptionId $CurrentSubscription.SubscriptionId -CurrentStorageAccountName $CurrentSubscription.CurrentStorageAccountName
 }
